@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+Enable 2FA (Text Message) for your WP account
+{% endblock %}
+
+{% block content %}
+    {% include 'configure_with_phone_number.html' with {
+        'action' : 'twofas-configure-sms',
+        'button_text' : 'Send text message',
+        'phone_submitted_success' : 'Code has been sent, please enter it in the form below',
+        'phone_submitted_error' : 'Something went wrong, please verify your phone number'
+    }%}
+{% endblock %}

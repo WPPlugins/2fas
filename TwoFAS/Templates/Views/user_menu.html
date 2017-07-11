@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="twofas-submenu-channel">
+        {% include 'twofas_modal.html' with {
+            'header'        : 'You are going to remove configuration for this method',
+            'paragraph'     : 'You are going to remove configuration for this method, it means that you will have to configure it once again before using it.',
+            'action'        : 'twofas-remove-totp-configuration',
+            'confirm_label' : 'Remove configuration',
+            'modal_name'    : 'twofas-totp-modal'
+        } %}
+
+        {% include 'twofas_modal.html' with {
+            'header'        : 'You are going to remove configuration for this method',
+            'paragraph'     : 'You are going to remove configuration for this method, it means that you will have to configure it once again before using it.',
+            'action'        : 'twofas-remove-call-configuration',
+            'confirm_label' : 'Remove configuration',
+            'modal_name'    : 'twofas-call-modal'
+        } %}
+
+        {% include 'twofas_modal.html' with {
+            'header'        : 'You are going to remove configuration for this method',
+            'paragraph'     : 'You are going to remove configuration for this method, it means that you will have to configure it once again before using it.',
+            'action'        : 'twofas-remove-sms-configuration',
+            'confirm_label' : 'Remove configuration',
+            'modal_name'    : 'twofas-sms-modal'
+        } %}
+
+        <h3>Your 2FA channel</h3>
+        <div class="twofas-card-container">
+            <div class="card twofas-card">
+                <span>Currently you are using: </span>
+                <span class="twofas-paragraph">
+                    {% if auth_method == 'SMS' %}
+                    Text Message
+                    {% elseif auth_method == 'CALL' %}
+                    Voice Call
+                    {% elseif auth_method == 'TOTP' %}
+                    TOTP
+                    {% else %}
+                    None
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+
+        <h3>Choose a new 2FA channel</h3>
+
+        <div class="twofas-card-container">
+            <div class="card twofas-card">
+                {% if totp_global_status != 'ENABLED' and sms_global_status != 'ENABLED' and call_global_status != 'ENABLED' %}
+                    <p class="twofas-center"><strong>There aren't any available channels. Please contact your administrator for more information.</strong></p>
+                {% endif %}
+
+                {% if totp_global_status == 'ENABLED' %}
+                    {% include 'channel_user_panel.html' with {
+                        'name'                        : 'TOTP',
+                        'display_name'                : 'TOTP',
+                        'description'                 : ' To verify you will need a token from a mobile app. You can use TOTP app, i.e. Google Authenticator, Authy or FreeOTP. ',
+                        'status'                      : totp_status,
+                        'auth_method'                 : auth_method,
+                        'configure_action'            : 'twofas-configure-totp',
+                        'disable_action'              : 'twofas-disable-totp',
+                        'enable_action'               : 'twofas-enable-totp',
+                        'remove_configuration_action' : 'twofas-remove-totp-configuration',
+                        'id_prefix'                   : 'totp',
+                        'modal_name'                  : 'twofas-totp-modal'
+                    } %}
+                {% endif %}
+
+                {% if sms_global_status == 'ENABLED' %}
+                    {% include 'channel_user_panel.html' with {
+                        'name'                        : 'SMS',
+                        'display_name'                : 'Text Message (SMS)',
+                        'description'                 : ' To verify you will need a code from a text message. ',
+                        'status'                      : sms_status,
+                        'auth_method'                 : auth_method,
+                        'configure_action'            : 'twofas-configure-sms',
+                        'disable_action'              : 'twofas-disable-sms',
+                        'enable_action'               : 'twofas-enable-sms',
+                        'remove_configuration_action' : 'twofas-remove-sms-configuration',
+                        'id_prefix'                   : 'sms',
+                        'modal_name'                  : 'twofas-sms-modal'
+                    } %}
+                {% endif %}
+
+                {% if call_global_status == 'ENABLED' %}
+                    {% include 'channel_user_panel.html' with {
+                        'name'                        : 'CALL',
+                        'display_name'                : 'Voice Call',
+                        'description'                 : ' To verify you will need a code from a voice call. ',
+                        'status'                      : call_status,
+                        'auth_method'                 : auth_method,
+                        'configure_action'            : 'twofas-configure-call',
+                        'disable_action'              : 'twofas-disable-call',
+                        'enable_action'               : 'twofas-enable-call',
+                        'remove_configuration_action' : 'twofas-remove-call-configuration',
+                        'id_prefix'                   : 'call',
+                        'modal_name'                  : 'twofas-call-modal'
+                    } %}
+                {% endif %}
+            </div>
+        </div>
+
+        <h3>Trusted devices list</h3>
+        {% include 'trusted_devices.html' with {
+            'trusted_devices' : trusted_devices
+        } %}
+    </div>
+
+{% endblock %}

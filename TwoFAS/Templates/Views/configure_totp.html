@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if error is not empty %}
+        <div class="notice error notice-error is-dismissible"><p>{{ error }}</p></div>
+    {% endif %}
+
+    <div id="twofas-notification-wrapper" class="twofas-card-container"></div>
+
+    <div class="twofas-configure-totp">
+        <div class="twofas-card-container">
+            <h3>Step 1 - Download an app</h3>
+
+            <div class="card twofas-card">
+                <div class="twofas-totp-card">
+                    <p>Please, download an app on your smartphone to generate tokens.</p>
+                    <p>Feel free to choose any app based on TOTP, i.e. Google Authenticator, Microsoft Authenticator,
+                        Authy, FreeOTP.</p>
+                    <div class="twofas-totp-app">
+                        <span class="twofas-app-label">Google Authenticator</span>
+                        <div class="twofas-app-description">
+                            <span class="twofas-app-icon"><img src="{{ twofas_plugin_path ~ '/includes/img/android.png' }}"/></span>
+                            <span class="twofas-app-desc-text">
+                                <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2" target="_blank">Download on Google Android</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="twofas-totp-app">
+                        <span class="twofas-app-label">Google Authenticator</span>
+                        <div class="twofas-app-description">
+                            <span class="twofas-app-icon"><img src="{{ twofas_plugin_path ~ '/includes/img/apple.png' }}"/></span>
+                            <span class="twofas-app-desc-text">
+                                <a href="https://itunes.apple.com/us/app/google-authenticator/id388497605?mt=8" target="_blank">Download on App Store</a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="twofas-totp-app">
+                        <span class="twofas-app-label">Microsoft Authenticator</span>
+                        <div class="twofas-app-description">
+                            <span class="twofas-app-icon"><img src="{{ twofas_plugin_path ~ '/includes/img/windows.png' }}"/></span>
+                            <span class="twofas-app-desc-text">
+                                <a href="https://www.microsoft.com/en-us/store/apps/authenticator/9wzdncrfj3rj" target="_blank">Download on the Microsoft Store</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+
+        <div class="twofas-card-container">
+            <h3>Step 2 - Configure your app</h3>
+            <div class="card twofas-card">
+                <div class="twofas-totp-card">
+                    <p>Please, scan the QR code with your app: </p>
+                    <img id="qr_code" class="totp-qr-code-img" src="{{ qr_code }}" alt="TOTP" style="max-width: 400px;"/>
+                    <br>
+                    <p hidden class="totp_private_field" id="totp_private_key">{{ totp_private_key }}</p>
+                    <button type="button" class="button button-secondary" id="show_key">Enter private key manually</button>
+
+                    <form class="reload-qr-code-form" action="{{ twofas_action_url('twofas-configure-totp') }}" method="post">
+                        {{ twofas_action_nonce('twofas-configure-totp') | raw }}
+                        <input name="twofas[reload-qr-code]" type="hidden" value="true">
+                        <input type="submit" class="twofas-reload-qr-code-submit button button-secondary" value="Reload QR Code" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="twofas-card-container">
+            <h3>Step 3 - Verify and enable</h3>
+            <div class="card twofas-card">
+                <form action="{{ twofas_action_url('twofas-configure-totp') }}" id="twofas-token-submit-form" method="post">
+                    {{ twofas_action_nonce('twofas-configure-totp') | raw }}
+                    <div class="enter-token-container">
+                        <div class="enter-token">
+                            <label for="totp-token-input" style="font-weight: bold;">Enter your token:</label>
+                            <input name="twofas[totp-token]" type="text" id="totp-token-input" value="" class="regular-text"
+                                   autocomplete="off" minlength="6" maxlength="6">
+                            <input type="submit" name="submit" id="submit" class="button button-primary" value="Enable"/>
+                        </div>
+                    </div>
+
+                    <input id="totp_private_key_field" name="twofas[totp-private-key]" type="hidden" value="{{ totp_private_key }}">
+                    <input id="totp_private_key_status" name="twofas[totp-private-key-status]" type="hidden" value="{{ totp_private_key_status }}">
+                </form>
+            </div>
+        </div>
+
+        <div class="twofas-card-container">
+            <a href="{{ twofas_admin_path }}admin.php?page=twofas-submenu-channel">Skip and go to "Your 2FA channel"</a>
+        </div>
+    </div>
+
+    <script>
+        function addErrorNotification(notification, event) {
+            jQuery("#twofas-notification-wrapper").html(notification);
+            jQuery("html, body").animate({scrollTop: 0}, "fast");
+            attachClickHandler();
+            event.preventDefault();
+        }
+
+        jQuery(document).ready(function () {
+            jQuery("#twofas-token-submit-form").submit(function (e) {
+                var totpToken = jQuery("#totp-token-input").val();
+                var notificationContent;
+
+                if (!totpToken) {
+                    notificationContent = '{{ render_dynamic_notification("Token cannot be empty") | raw }}';
+                    addErrorNotification(notificationContent, e);
+                    return;
+                }
+
+                var isTokenValid = /\d{6}/.test(totpToken);
+
+                if (!isTokenValid) {
+                    notificationContent = '{{ render_dynamic_notification("Token is not in a valid format, please check entered token") | raw }}';
+                    addErrorNotification(notificationContent, e);
+                    return;
+                }
+
+                jQuery(this).find('input[type="submit"]').attr('disabled', true).val("Loading...");
+            })
+        });
+
+        jQuery("#show_key").click(function () {
+            jQuery("#totp_private_key").show();
+        });
+
+        function attachClickHandler() {
+            jQuery("#twofas-not-close-button").click(function () {
+                jQuery("#twofas-dynamic-notification").hide();
+            });
+        }
+
+        jQuery('.twofas-reload-qr-code-submit').click(function() {
+            jQuery.ajax({
+                url  : '{{ twofas_admin_path }}admin-ajax.php',
+                type : 'post',
+                data : {
+                    action      : 'twofas_reload_qr_code',
+                    action_name : 'twofas-configure-totp',
+                    security    : jQuery('#_wpnonce').val()
+                },
+                success : function(response) {
+                    var totpPrivateKey = response.totp_private_key;
+                    var qrCode         = response.qr_code;
+
+                    jQuery("#qr_code").attr('src', qrCode);
+                    jQuery("#totp_private_key").html(totpPrivateKey);
+                    jQuery("#totp_private_key_field").attr('value', totpPrivateKey);
+                    jQuery("#totp_private_key_status").attr('value', 'recently_generated');
+                }
+            });
+
+            return false;
+        });
+    </script>
+{% endblock %}

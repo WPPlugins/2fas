@@ -1,0 +1,163 @@
+<div id="notification-header"></div>
+    <h3>Step 1 - Mobile phone number</h3>
+<div class="twofas-card-container">
+    <div class="card twofas-card">
+        <form action="{{ twofas_action_url(action) }}" id="twofas-phone-submit-form" method="post">
+            {{ twofas_action_nonce(action) | raw }}
+            <div class="twofas-phone-form-row">
+                <label for="phone-input" style="font-weight: bold;">Enter your phone</label>
+                <input name="twofas[phone-number]" type="text" id="phone-input" value="" class="regular-text twofas-phone" autocomplete="off" />
+                <input type="submit" name="submit" id="submit-phone" class="button twofas-phone-submit button-primary" value="{{ button_text }}" />
+            </div>
+        </form>
+    </div>
+    <h3>Step 2 - Verify and enable</h3>
+    <div class="card twofas-card">
+        <form action="{{ twofas_action_url(action) }}" id="twofas-token-submit-form" method="post">
+            {{ twofas_action_nonce(action) | raw }}
+            <div class="enter-token-container">
+                <div class="enter-token">
+                    <label for="token-input" style="font-weight: bold;">Enter your code</label>
+                    <input name="twofas[code]" type="text" id="token-input" value="" minlength="6" maxlength="6"  class="regular-text twofas-token" autocomplete="off">
+                    <input name="twofas[authentication_id]" type="hidden" id="authentication-field" value="{{ authentication_id }}" class="" autocomplete="">
+                    <input name="twofas[phone-number]" type="hidden" id="phone-repeated-input" value="{{ phone_number }}" class="">
+                    <input type="submit" name="submit" id="submit-token" class="button button-primary" value="Enable"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="twofas-card-container">
+    <a href="{{ twofas_admin_path }}admin.php?page=twofas-submenu-channel">Skip and go to "Your 2FA channel"</a>
+</div>
+
+<script>
+    function closeButton(button) {
+        var jQueryButton = jQuery(button);
+        jQueryButton.parent().hide();
+    }
+
+    function addErrorNotification(content) {
+        jQuery("#notification-header").html('<div class="notice notice-error is-dismissible error"><p>'+content+'</p><button onclick="closeButton(this)" class="notice-dismiss" type="button"></button></div>');
+    }
+
+    function addSuccessNotification(content) {
+        jQuery("#notification-header").html('<div class="notice notice-success is-dismissible updated"><p>'+content+'</p><button onclick="closeButton(this)" class="notice-dismiss" type="button"></button></div>');
+    }
+
+    jQuery(document).ready(function() {
+        var phoneInput  = jQuery('#phone-input');
+        var phoneSubmit = jQuery('#submit-phone');
+        var tokenInput  = jQuery('#token-input');
+        var tokenSubmit = jQuery('#submit-token');
+
+        phoneInput.intlTelInput({
+            initialCountry: 'auto',
+            geoIpLookup: function(callback) {
+                jQuery.get('http://ipinfo.io', function() {}, 'jsonp').always(function(resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : '';
+                    callback(countryCode);
+                });
+            },
+            utilsScript: '{{ twofas_plugin_path }}/includes/js/utils.js'
+        });
+
+        phoneInput.intlTelInput('setNumber', '{{ phone_number }}');
+
+        {% if authentication_id %}
+            phoneInput.attr('disabled', true);
+            phoneSubmit.attr('disabled', true);
+        {% else %}
+            tokenInput.attr('disabled', true);
+            tokenSubmit.attr('disabled', true);
+        {% endif %}
+
+        jQuery("#twofas-phone-submit-form").submit(function(e) {
+            e.preventDefault();
+
+            var phoneNumber = phoneInput.intlTelInput('getNumber');
+
+            if (phoneNumber) {
+                phoneSubmit.attr('disabled', true).val('Please wait...');
+            } else {
+                addErrorNotification('Please enter your phone number');
+                return;
+            }
+
+            var nonce           = jQuery('#_wpnonce');
+            var actionName      = '{{ action }}';
+            var channel         = '';
+            var notificationKey = '';
+
+            {% if action == 'twofas-configure-sms' %}
+                channel         = 'sms';
+                notificationKey = 'configure_sms';
+            {% elseif action == 'twofas-configure-call' %}
+                channel         = 'call';
+                notificationKey = 'configure_call';
+            {% endif %}
+
+            phoneSubmit.attr('disabled', true);
+            phoneInput.attr('disabled', true);
+
+            jQuery.ajax({
+                url  : '{{ twofas_admin_path }}admin-ajax.php',
+                type : 'post',
+                data : {
+                    action           : 'twofas_authenticate_via_phone',
+                    phone_number     : phoneNumber,
+                    channel          : channel,
+                    notification_key : notificationKey,
+                    action_name      : actionName,
+                    security         : nonce.val()
+                },
+                success : function(response) {
+                    var succeed          = response.succeed;
+                    var errorMessage     = response.error_message;
+                    var successMessage   = response.success_message;
+                    var authenticationId = response.authentication_id;
+
+                    phoneSubmit.attr('disabled', true);
+                    phoneSubmit.val("{{ button_text }}");
+
+                    if (succeed) {
+                        tokenInput.attr('disabled', false);
+                        tokenInput.focus();
+                        tokenSubmit.attr('disabled', false);
+                        addSuccessNotification(successMessage);
+                    } else {
+                        addErrorNotification(errorMessage);
+                        phoneSubmit.attr('disabled', false);
+                        phoneInput.attr('disabled', false);
+                    }
+
+                    jQuery("#phone-repeated-input").val(phoneNumber);
+                    jQuery("#authentication-field").val(authenticationId);
+                }
+            });
+
+            return false;
+        });
+
+        jQuery("#twofas-token-submit-form").submit(function(e) {
+            var token = tokenInput.val();
+
+            if (!token) {
+                addErrorNotification('Code cannot be empty');
+                e.preventDefault();
+                return;
+            }
+
+            var isTokenValid = /\d{6}/.test(token);
+
+            if (!isTokenValid) {
+                addErrorNotification('Code is not in a valid format');
+                e.preventDefault();
+                return;
+            }
+
+            tokenSubmit.attr('disabled', true).val('Loading...');
+        })
+    });
+</script>

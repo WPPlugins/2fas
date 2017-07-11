@@ -1,0 +1,29 @@
+<div id="account-created-modal" class="modal" style="display: block">
+    <div class="modal-content account-modal-container" style="height: 170px;">
+        <div class="modal-header">&nbsp;</div>
+        <div class="modal-body">
+            <h3 id="modal-h3">Your 2FAS.com account<br>has been created.</h3>
+            <p>Your 2FA is inactive. In order to activate it, please click Continue to configure TOTP or click cancel to skip.</p>
+        </div>
+        <div class="modal-footer">
+            <div class="modal-footer-right">
+                <button type="submit" name="submit" id="twofas-modal-redirect-to-totp-conf-cancel" class="twofas-button-as-link">
+                    Cancel
+                </button>
+                <button type="submit" name="submit" id="twofas-modal-redirect-to-totp-conf-confirm" class="button button-primary">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="javascript">
+    jQuery("#twofas-modal-redirect-to-totp-conf-confirm").click(function(event) {
+        window.location.href = "{{ twofas_admin_path }}admin.php?page=twofas-submenu-channel&twofas-action=twofas-configure-totp";
+        jQuery(this).attr('disabled', true);
+    });
+
+    jQuery("#twofas-modal-redirect-to-totp-conf-cancel").click(function(event) {
+        jQuery("#account-created-modal").hide();
+    });
+</script>

@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="twofas-submenu-admin">
+        {% if wizard_modal_status %}
+            {% include 'modal_window.html' %}
+        {% endif %}
+
+        {% if number_of_accounts_with_configured_and_enabled_totp_channel > 0 %}
+            {% include 'twofas_modal.html' with {
+                'header'        : 'You are going to disable<br>TOTP channel globally.',
+                'paragraph'     : 'Please note that there is at least one user using this channel.<br />If you confirm, all users lose 2FA protection.',
+                'action'        : 'twofas-force-disable-totp-globally',
+                'confirm_label' : 'Disallow',
+                'modal_name'    : 'twofas-totp-modal'
+            } %}
+        {% endif %}
+
+        {% if number_of_accounts_with_configured_and_enabled_sms_channel > 0 %}
+            {% include 'twofas_modal.html' with {
+                'header'        : 'You are going to disable<br>text message channel globally.',
+                'paragraph'     : 'Please note that there is at least one user using this channel.<br />If you confirm, all users lose 2FA protection.',
+                'action'        : 'twofas-force-disable-sms-globally',
+                'confirm_label' : 'Disallow',
+                'modal_name'    : 'twofas-sms-modal'
+            } %}
+        {% endif %}
+
+        {% if number_of_accounts_with_configured_and_enabled_call_channel > 0 %}
+            {% include 'twofas_modal.html' with {
+                'header'        : 'You are going to disable<br>voice channel globally.',
+                'paragraph'     : 'Please note that there is at least one user using this channel.<br />If you confirm, all users lose 2FA protection.',
+                'action'        : 'twofas-force-disable-call-globally',
+                'confirm_label' : 'Disallow',
+                'modal_name'    : 'twofas-call-modal'
+            } %}
+        {% endif %}
+
+        {% include 'twofas_modal.html' with {
+            'header'        : 'You are going to disable your 2FA<br>and erase the plugin configuration.',
+            'paragraph'     : 'Please note that 2FA protection will be disabled for all users.<br />If you re-log in, you need to set up 2FA again for all accounts.',
+            'action'        : 'twofas-logout',
+            'confirm_label' : 'Disable',
+            'modal_name'    : 'twofas-logout-modal'
+        } %}
+
+        <div class="twofas-card-container">
+            <h3>Account</h3>
+            <div class="card twofas-card twofas-admin-settings visible-phone">
+                <div class="twofas-admin-settings-row">
+                    2FAS.com email:<br>
+                    <div class="twofas-admin-email">{{ twofas_email }} (<a href="{{ twofas_admin_path }}admin.php?page=twofas-submenu-admin&twofas-action=twofas-login">change account</a>)</div>
+                </div>
+                <div class="twofas-admin-settings-row">
+                    Paid channels:<br>
+
+                    {% if client_card_status %}
+                        <div class="twofas-admin-email">Configured (<a href="{{ get_dashboard_url() }}" target="_blank" class="twofas-modal-opener" data-modal="">change</a>)</div>
+                    {% elseif client_custom_password_status %}
+                        <div class="twofas-admin-email">Not configured (<a href="{{ get_dashboard_url() }}" target="_blank" class="twofas-modal-opener twofas-popup-opener">configure</a>)</div>
+                    {% elseif api_connection_status %}
+                        <div class="twofas-admin-email">Not configured (<a href="" class="twofas-dashboard-popup-link" data-modal="twofas-configure-account-modal">set password</a>)</div>
+                    {% else %}
+                        <div class="twofas-admin-email">Could not get paid channels status</div>
+                    {% endif %}
+                </div>
+                <br>
+                <div class="twofas-admin-settings-row twofas-link-float-left">
+                </div>
+                <div class="twofas-admin-settings-row twofas-link-float-left">
+                    <form action="{{ twofas_admin_path }}admin.php?page=twofas-submenu-admin" method="post" style="margin-bottom: 0;">
+                        <input type="hidden" name="logout" value="logout">
+                        <input type="submit" class="twofas-link-float-left twofas-modal-opener twofas-link" value="Disable and erase your 2FA configuration" data-modal="twofas-logout-modal">
+                    </form>
+                </div>
+            </div>
+            <div class="card twofas-card twofas-admin-settings hidden-phone">
+                <div class="twofas-admin-settings-row">
+                    <div class="twofas-admin-settings-label-column">2FAS.com email: </div>
+                    <div class="twofas-admin-settings-content-column">{{ twofas_email }} (<a id="twofas-change-account-non-phone-link" href="{{ twofas_admin_path }}admin.php?page=twofas-submenu-admin&twofas-action=twofas-login">change account</a>)</div>
+                </div>
+                <div class="twofas-admin-settings-row">
+                    <div class="twofas-admin-settings-label-column">Paid channels: </div>
+
+                    {% if client_card_status %}
+                        <div class="twofas-admin-settings-content-column">Configured (<a href="{{ get_dashboard_url() }}" target="_blank" class="twofas-modal-opener" data-modal="">change</a>)</div>
+                    {% elseif client_custom_password_status %}
+                        <div class="twofas-admin-settings-content-column">Not configured (<a id="twofas-configure-non-phone-link" href="{{ get_dashboard_url() }}" target="_blank" class="twofas-modal-opener" data-modal="">configure</a>)</div>
+                    {% elseif api_connection_status %}
+                        <div class="twofas-admin-settings-content-column">Not configured (<a href="" class="twofas-dashboard-popup" data-modal="twofas-configure-account-modal">set password</a>)</div>
+                    {% else %}
+                        <div class="twofas-admin-settings-content-column">Could not get paid channels status</div>
+                    {% endif%}
+                </div>
+                <div class="twofas-admin-settings-row twofas-link-float-right">
+                </div>
+                <div class="twofas-admin-settings-row twofas-link-float-right">
+                    <form action="{{ twofas_admin_path }}admin.php?page=twofas-submenu-admin" method="post" >
+                        <input type="hidden" name="logout" value="logout">
+                        <input type="submit" class="twofas-link-float-right twofas-modal-opener twofas-link" value="Disable and erase your 2FA configuration" data-modal="twofas-logout-modal">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="twofas-card-container">
+            <h3>Visibility for WP users</h3>
+            <div class="card twofas-card">
+                <div class="twofas-card-channels">
+                    <h4>Free channels:</h4>
+
+                    {% include 'channel_panel.html' with {
+                        'name'                      : 'TOTP',
+                        'description'               : 'To verify you will need a token from a mobile app. You can use TOTP app, i.e. Google Authenticator, Authy or FreeOTP.',
+                        'configured_on'             : number_of_accounts_with_configured_totp_channel,
+                        'active_on'                 : number_of_accounts_with_configured_and_enabled_totp_channel,
+                        'inactive_on'               : number_of_accounts_with_configured_and_disabled_totp_channel,
+                        'method_status'             : totp_channel_status,
+                        'enable_action'             : enable_totp_globally_action_name,
+                        'disable_action'            : disable_totp_globally_action_name,
+                        'channel_submit'            : 'totp-channel-submit',
+                        'twofas_confirmation_name'  : 'totp_confirmation_modal',
+                        'twofas_confirmation_value' : number_of_accounts_with_configured_and_enabled_totp_channel > 0,
+                        'admin_action'              : admin_action_name,
+                        'icon_class'                : 'icon-spinner8',
+                        'modal_name'                : 'twofas-totp-modal'
+                    } %}
+                </div>
+                <div class="twofas-card-channels">
+                    <h4>Paid channels:</h4>
+                    {% include 'channel_panel.html' with {
+                        'name'                      : 'Text Message (SMS)',
+                        'description'               : 'To verify you will need a code from a text message.',
+                        'configured_on'             : number_of_accounts_with_configured_sms_channel,
+                        'active_on'                 : number_of_accounts_with_configured_and_enabled_sms_channel,
+                        'inactive_on'               : number_of_accounts_with_configured_and_disabled_sms_channel,
+                        'method_status'             : sms_channel_status,
+                        'enable_action'             : enable_sms_globally_action_name,
+                        'disable_action'            : disable_sms_globally_action_name,
+                        'channel_submit'            : 'sms-channel-submit',
+                        'twofas_confirmation_name'  : 'sms_confirmation_modal',
+                        'twofas_confirmation_value' : number_of_accounts_with_configured_and_enabled_sms_channel > 0,
+                        'admin_action'              : admin_action_name,
+                        'icon_class'                : 'icon-mobile',
+                        'modal_name'                : 'twofas-sms-modal'
+                    } %}
+
+                    {% include 'channel_panel.html' with {
+                        'name'                      : 'Voice Call',
+                        'description'               : 'To verify you will need a code from a voice call.',
+                        'configured_on'             : number_of_accounts_with_configured_call_channel,
+                        'active_on'                 : number_of_accounts_with_configured_and_enabled_call_channel,
+                        'inactive_on'               : number_of_accounts_with_configured_and_disabled_call_channel,
+                        'method_status'             : call_channel_status,
+                        'enable_action'             : enable_call_globally_action_name,
+                        'disable_action'            : disable_call_globally_action_name,
+                        'channel_submit'            : 'call-channel-submit',
+                        'twofas_confirmation_name'  : 'call_confirmation_modal',
+                        'twofas_confirmation_value' : number_of_accounts_with_configured_and_disabled_call_channel > 0,
+                        'admin_action'              : admin_action_name,
+                        'icon_class'                : 'icon-phone',
+                        'modal_name'                : 'twofas-call-modal'
+                    } %}
+                </div>
+            </div>
+        </div>
+        <script>
+            jQuery(document).ready(function () {
+                jQuery('body').on('click', '.notice-dismiss', function() {
+                    jQuery(this).parent().hide();
+                });
+
+                jQuery(".twofas-dashboard-popup").click(function () {
+                    var newWindow = window.open('', '', 'width = 500, height = 550');
+
+                    newWindow.document.open();
+                    newWindow.document.write('<!DOCTYPE html> <html lang="en"> <head> <style> body { background-color: #EEEEEE; font-family: "Helvetica Neue",sans-serif; } .content { margin-top: 50px; margin-left: 5%; margin-right: 5%; line-height: 25px; background-color: white; border: 1px solid; border-color: lightgray; padding: 20px; text-align: center; font-size: 15px; } h1, p { text-align: center; } h1 { font-size: 20px; } .twofas-link { width: 200px; display: inline-block; text-decoration: none; font-size: 13px; line-height: 26px; height: 28px; padding: 0 10px 1px; cursor: pointer; border-width: 1px; border-style: solid; -webkit-appearance: none; -webkit-border-radius: 3px; border-radius: 3px; white-space: nowrap; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; box-shadow: 0 1px 0 #319134 !important; border-color: #319134 !important; color: #fff !important; background: #39b13e !important; } .twofas-link-disabled { pointer-events: none; cursor: default; background-color: #028429 !important; box-shadow: none; } p { text-align: justify; font-size: 14px; } ul { text-align: left; } li { font-size: 12px; list-style-type: decimal; } h2 { font-size: 14px; font-weight: bold; } </style> </head> <body> <div class="content"> <h1> Set up your 2FAS password</h1> <p> Before you can enable paid channels, you need to set up your 2FAS password. You will be able to log into 2FAS dashboard and configure payment options.</p> <h2> Steps to enable paid channels</h2> <ul> <li> Click the \'Set up new password\' button.</li> <li> You will receive a link to set up new password at {{ twofas_email }} </li> <li> Click the link and enter your new password</li> <li> You will be able to configure your payment options</li> <li> Go back to your WordPress plugin and refresh the site.</li> <li> Update your password as needed.</li> </ul> <a class="twofas-link" id="twofas-setup-password-link" href="{{ get_dashboard_url() }}/#/setup-password/{{ twofas_email }}" onclick="document.getElementById(\'twofas-setup-password-link\').className = \'twofas-link twofas-link-disabled\';">Set up new password</a> </div> </body> </html>');
+                    newWindow.document.close();
+
+                    return false;
+                });
+            });
+        </script>
+    </div>
+{% endblock %}

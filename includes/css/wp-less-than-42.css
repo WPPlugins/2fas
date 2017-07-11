@@ -1,0 +1,11 @@
+.notice-dismiss {
+  display: none; }
+
+.card {
+  border: 1px solid lightgray;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: white; }
+
+/*# sourceMappingURL=wp-less-than-42.css.map */

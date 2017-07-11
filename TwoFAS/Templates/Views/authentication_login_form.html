@@ -1,0 +1,134 @@
+{{ display_header(error) }}
+
+<div id="login_error" style="display: none"></div>
+
+{% if info_message %}
+<p class="message twofas-hide-after-time">{{ info_message }}</p>
+{% endif %}
+
+<div class="twofas-login-form-container">
+    {% if premium_message == true %}
+    <form method="post" action="{{ login_url }}" class="twofas-resend-code-form">
+        <div class="resend-code-container">
+            <p>{{ channel_message }} ...{{ phone_number_ending(phone_number) }}</p>
+            <input type="submit" class="twofas-resend-code button-link" value="{{ resend_code }}" />
+        </div>
+
+        <input type="hidden" name="twofas-action" value="resend-code" />
+
+        <input type="hidden" name="redirect_to" value="{{ redirect_to }}" />
+
+        {% if rememberme is not empty %}
+        <input type="hidden" name="rememberme" value="{{ rememberme }}" />
+        {% endif %}
+
+        {% if testcookie is not empty %}
+        <input type="hidden" name="testcookie" value="{{ testcookie }}" />
+        {% endif %}
+
+        {% if reauth is not empty %}
+        <input type="hidden" name="reauth" value="{{ reauth }}" />
+        {% endif %}
+
+        {% if interim_login is not empty %}
+        <input type="hidden" name="interim-login" value="{{ interim_login }}" />
+        {% endif %}
+    </form>
+    {% endif %}
+
+    <form method="post" action="{{ login_url }}" id="loginform" class="twofas-login-form">
+        <p class="login-username">
+            <label for="twofas_code">Enter your {{ request_for_code }}:</label>
+            <input type="text" name="twofas_code" id="twofas_code" autocomplete="off" maxlength="6" autofocus>
+        </p>
+        <div class="remember-container">
+            <div class="column">
+                {% if twofas_remember_device %}
+                <input type="checkbox" name="twofas_remember_device" id="twofas_remember_device" checked />
+                {% else %}
+                <input type="checkbox" name="twofas_remember_device" id="twofas_remember_device" />
+                {% endif %}
+            </div>
+            <div class="column">
+                <label class="twofas-remember-device-label" for="twofas_remember_device" >This is my private computer.<br>Please don't ask for my {{ request_for_code }} next time.</label>
+            </div>
+        </div>
+        <input type="hidden" name="redirect_to" value="{{ redirect_to }}" />
+
+        {% if rememberme is not empty %}
+        <input type="hidden" name="rememberme" value="{{ rememberme }}" />
+        {% endif %}
+
+        {% if testcookie is not empty %}
+        <input type="hidden" name="testcookie" value="{{ testcookie }}" />
+        {% endif %}
+
+        {% if reauth is not empty %}
+        <input type="hidden" name="reauth" value="{{ reauth }}" />
+        {% endif %}
+
+        {% if interim_login is not empty %}
+        <input type="hidden" name="interim-login" value="{{ interim_login }}" />
+        {% endif %}
+
+        <p class="submit">
+            <input type="submit" name="wp-submit" id="wp-submit" class="button button-primary button-large" value="Log In" />
+        </p>
+        <br>
+        <div class="twofas-footer">
+            <div class="twofas-footer-wrapper">
+                <div class="twofas-table-wrapper">
+                    <div class="twofas-footer-message">
+                        {% if interim_login is not empty %}
+                        <a href="{{login_url}}?twofas-action=stop-login-process&interim-login={{ interim_login }}">Go back to the logging in</a>
+                        {% else %}
+                        <a href="{{login_url}}?twofas-action=stop-login-process">Go back to the logging in</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    function addErrorNotification(message) {
+        var header = jQuery("#login_error");
+        header.show();
+        header.text(message);
+    }
+
+    function validateToken(token) {
+        if (!token) {
+            addErrorNotification('{{ request_for_code|capitalize }} cannot be empty');
+            return false;
+        }
+        var isTokenValid = /\d{6}/.test(token);
+
+        if (!isTokenValid) {
+            addErrorNotification('{{ request_for_code|capitalize }} is not in a valid format');
+            return false;
+        }
+
+        return true;
+    }
+
+    jQuery(document).ready(function() {
+        // Hide notification after 2 seconds
+        jQuery(".twofas-hide-after-time").delay(2000).fadeOut(300);
+
+        jQuery("#wp-submit").click(function(e){
+            var token = jQuery("#twofas_code").val();
+            if (!validateToken(token)) {
+                e.preventDefault();
+                return;
+            }
+
+            var submitButton = jQuery('.submit');
+            jQuery(submitButton).addClass('disabled');
+            jQuery(submitButton).find('input[type="submit"]').val('Loading...');
+        });
+    });
+</script>
+
+{{ login_footer() }}

@@ -1,0 +1,160 @@
+<div id="account-modal" style="display: none;">
+    <div class="account-modal-container">
+        <div class="modal-header"></div>
+        <div class="modal-body" style="padding-top: 15px;">
+            <h2>Are you sure you want to remove this trusted device?</h2>
+            <p>This action will remove this device from your trusted devices list, in effect you will be asked
+                for your token during next login.</p>
+        </div>
+        <div class="modal-footer" style="padding-top: 10px;">
+            <div class="modal-footer-right">
+                <button type="submit" name="submit" id="submit-cancel" class="button button-primary">
+                    Cancel
+                </button>
+                <button type="button" name="submit" id="submit-confirm" class="twofas-button-danger">
+                    Remove trusted device
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="twofas-card-container">
+    <p>When you are using a trusted device, you don't need to enter a verification code each time you log
+        in.</p>
+    <table class="wp-list-table widefat fixed stripped twofas-trusted-machines hidden-phone-table card twofas-card">
+        <thead>
+        <tr>
+            <th class="manage-column">Browser and device</th>
+            <th class="manage-column">Added on</th>
+            <th class="manage-column">IP Address</th>
+            <th class="manage-column">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% if trusted_devices is empty %}
+                <tr>
+                    <td colspan="4">
+                        <p class="text-center">
+                            <strong>You don't have any trusted devices</strong>
+                        </p>
+                    </td>
+                </tr>
+            {% endif %}
+            {% for key, value in trusted_devices %}
+                <tr>
+                <td>{{ describe_device(value.user_agent) }}</td>
+                <td>{{ timestamp_to_wp_datetime(value.time) }}</td>
+                <td>{{ value.IP }}</td>
+                <td>
+                    <form class="twofas-trusted-machine" action="{{ twofas_action_url('twofas-remove-trusted-machine') }}" method="post">
+                        <button type="submit" class="twofas-button-link twofas-remove-trusted-device">
+                            <span class="icon-bin"></span>
+                            <span class="remove-machine-link ">Remove</span>
+                            {{ twofas_action_nonce('twofas-remove-trusted-machine') | raw }}
+                            <input type="hidden" name="twofas[id]" value="{{ key }}">
+                        </button>
+                    </form>
+                </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<div class="card twofas-card visible-phone">
+    {% if trusted_devices is empty %}
+        <p class="text-center">
+            <strong>You don't have any trusted devices</strong>
+        </p>
+    {% endif %}
+    {% for key, value in trusted_devices %}
+        <div class="trusted-machine-mobile">
+            <div>
+                <div><p><strong>Browser and device</strong></p></div>
+                <div>{{ describe_device(value.user_agent) }}</div>
+            </div>
+            <div>
+                <div><p><strong>Added on</strong></p></div>
+                <div>{{ timestamp_to_wp_datetime(value.time) }}</div>
+            </div>
+            <div>
+                <div><p><strong>IP Address</strong></p></div>
+                <div>{{ value.IP }}</div>
+            </div>
+            <div>
+                <div><p><strong>Action</strong></p></div>
+                <div>
+                    <form class="twofas-trusted-machine" action="{{ twofas_action_url('twofas-remove-trusted-machine') }}" method="post">
+                        <button type="submit" class="twofas-button-link twofas-remove-trusted-device">
+                            <span class="dashicons dashicons-trash"></span>
+                            <span class="remove-machine-link ">Remove</span>
+                            {{ twofas_action_nonce('twofas-remove-trusted-machine') | raw }}
+                            <input type="hidden" name="twofas[id]" value="{{ key }}">
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+</div>
+
+<script>
+
+    var form = null;
+
+    jQuery(".twofas-remove-trusted-device").click(function(e) {
+        tb_show("HAI", "#TB_inline?height=210&amp;width=380&amp;inlineId=account-modal&amp;modal=true", null);
+        form = jQuery(this).parents('form:first');
+        e.preventDefault();
+
+        var TB_WIDTH = 410;
+        var TB_HEIGHT = 250;
+
+        // Copied from thickbox.js in order to override
+        // function which destroys standard positioning
+        // of the modal
+        var isIE6 = typeof document.body.style.maxHeight === "undefined";
+        var tbWindow = jQuery("#TB_window");
+
+        tbWindow.css({
+            marginLeft: '-' + parseInt((TB_WIDTH / 2), 10) + 'px',
+            width: TB_WIDTH + 'px'
+        });
+
+        if (!isIE6) {
+            tbWindow.css({marginTop: '-' + parseInt((TB_HEIGHT / 2), 10) + 'px'});
+        }
+
+        // Reset top and height values which were set
+        // by function destroying standard position
+        tbWindow.css({"top": "", "height": ""});
+    });
+
+    jQuery(".thickbox-close").click(function(event) {
+        event.preventDefault();
+        tb_remove();
+    });
+
+    jQuery(document).on("click", '.TB_overlayBG', function() {
+        tb_remove();
+    });
+
+    jQuery("#submit-confirm").click(function (event) {
+        jQuery(this).addClass("twofas-danger-disabled");
+        form.submit();
+    });
+
+    jQuery("#submit-cancel").click(function(event) {
+        event.preventDefault();
+        tb_remove();
+    });
+
+    jQuery(document).keyup(function(e) {
+        if (e.keyCode == 27) {
+            event.preventDefault();
+            tb_remove();
+        }
+    });
+
+</script>

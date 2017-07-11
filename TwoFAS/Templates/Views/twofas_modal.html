@@ -1,0 +1,43 @@
+
+<div id="{{ modal_name }}" class="modal">
+    <div class="modal-content account-modal-container">
+        <div class="modal-header">&nbsp;</div>
+        <div class="modal-body">
+            <h3>{{ header | raw }}</h3>
+            <p>{{ paragraph | raw}}</p>
+        </div>
+        <div class="modal-footer">
+            <div class="modal-footer-right">
+                {% if action %}
+                    <input type="submit" name="submit-cancel" id="submit-modal-cancel-{{ modal_name }}" class="button button-primary" value="Cancel">
+                    <form class="twofas-button-form" action="{{ twofas_action_url(action) }}" method="post">
+                        {{ twofas_action_nonce(action) | raw }}
+                        <input type="submit" id="submit-modal-confirm-{{ modal_name }}" class="button button-primary {{ submit_class | default('button-danger') }}  twofas-no-shadow" value="{{ confirm_label }}">
+                        <input type="hidden" name="twofas[hidden-field]" value="{{ hidden_field }}">
+                    </form>
+                {% else  %}
+                    <input type="submit" name="submit-cancel" id="submit-modal-cancel-{{ modal_name }}" class="button button-primary" value="Close">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    jQuery(window).load(function(){
+        jQuery(".twofas-modal-opener").click(function(e) {
+            var modalId = jQuery(this).attr("data-modal");
+            var element = jQuery("#" + modalId);
+
+            if (element.length) {
+                element.css("display", "block");
+                e.preventDefault();
+            }
+        });
+
+        jQuery("#submit-modal-cancel-{{ modal_name }}").click(function() {
+            jQuery("#{{ modal_name }}").hide();
+        });
+    });
+</script>

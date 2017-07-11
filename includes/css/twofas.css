@@ -1,0 +1,669 @@
+#login_error {
+  margin-bottom: 20px; }
+
+.twofas-login-form-container {
+  box-sizing: border-box;
+  margin-top: 0; }
+  .twofas-login-form-container .twofas-resend-code-form {
+    padding: 16px 0 0 0 !important; }
+    .twofas-login-form-container .twofas-resend-code-form .resend-code-container {
+      text-align: center;
+      padding-bottom: 10px; }
+      .twofas-login-form-container .twofas-resend-code-form .resend-code-container input[type="submit"].twofas-resend-code {
+        color: #72777c;
+        font-size: 11px;
+        padding-bottom: 2px;
+        cursor: pointer;
+        border: 0 none;
+        background: none;
+        text-decoration: underline !important; }
+  .twofas-login-form-container .twofas-login-form {
+    position: relative !important;
+    padding-bottom: 50px;
+    box-sizing: content-box !important;
+    margin-top: 0;
+    padding-top: 21px !important; }
+    .twofas-login-form-container .twofas-login-form * {
+      box-sizing: border-box; }
+    .twofas-login-form-container .twofas-login-form .remember-container {
+      width: 100%;
+      display: table; }
+      .twofas-login-form-container .twofas-login-form .remember-container .column {
+        display: table-cell;
+        vertical-align: top; }
+        .twofas-login-form-container .twofas-login-form .remember-container .column input[type="checkbox"] {
+          margin-top: -6px; }
+        .twofas-login-form-container .twofas-login-form .remember-container .column .twofas-remember-device-label {
+          font-size: 11px !important;
+          position: relative !important;
+          bottom: 6px !important;
+          left: 3px !important; }
+    .twofas-login-form-container .twofas-login-form .submit {
+      text-align: right;
+      margin-top: 15px;
+      height: 30px; }
+      .twofas-login-form-container .twofas-login-form .submit::before {
+        margin-top: 7px;
+        margin-right: 4px; }
+    .twofas-login-form-container .twofas-login-form .twofas-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0; }
+      .twofas-login-form-container .twofas-login-form .twofas-footer .twofas-footer-wrapper {
+        margin: 0 24px;
+        border-top: 1px solid #ddd;
+        padding: 10px 0; }
+        .twofas-login-form-container .twofas-login-form .twofas-footer .twofas-footer-wrapper .twofas-table-wrapper {
+          width: 100%;
+          display: table; }
+          .twofas-login-form-container .twofas-login-form .twofas-footer .twofas-footer-wrapper .twofas-table-wrapper .twofas-footer-message {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: left;
+            font-size: 11px;
+            line-height: 19px;
+            color: #72777c; }
+            .twofas-login-form-container .twofas-login-form .twofas-footer .twofas-footer-wrapper .twofas-table-wrapper .twofas-footer-message a {
+              font-size: 11px;
+              line-height: 19px;
+              color: #72777c; }
+
+.twofas-login-footer {
+  position: fixed;
+  right: 30px;
+  bottom: 30px; }
+  .twofas-login-footer:hover .twofas-login-footer-tooltip {
+    display: inline; }
+  .twofas-login-footer .twofas-login-footer-tooltip {
+    display: none;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    margin-top: 3px;
+    margin-right: 4px;
+    float: left; }
+  .twofas-login-footer .twofas-login-footer-logo {
+    display: inline-block; }
+
+.twofas-card-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: border-box; }
+  @media all and (max-width: 640px) {
+    .twofas-card-container {
+      padding: 0 10px; } }
+  @media all and (max-width: 782px) {
+    .twofas-card-container .visible-phone {
+      display: block; }
+    .twofas-card-container .hidden-phone,
+    .twofas-card-container .hidden-phone-table {
+      display: none; } }
+  @media all and (min-width: 783px) {
+    .twofas-card-container .visible-phone {
+      display: none; }
+    .twofas-card-container .hidden-phone {
+      display: block; }
+    .twofas-card-container .hidden-phone-table {
+      display: table; } }
+  .twofas-card-container > p {
+    margin-top: 0; }
+  .twofas-card-container > p {
+    margin-top: 0; }
+  @media all and (min-width: 783px) {
+    .twofas-card-container .visible-phone {
+      display: none; }
+    .twofas-card-container .hidden-phone {
+      display: block; }
+    .twofas-card-container .hidden-phone-table {
+      display: table; } }
+  .twofas-card-container > p {
+    margin-top: 0; }
+  .twofas-card-container .twofas-card {
+    min-width: 0;
+    max-width: 100%;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04); }
+    .twofas-card-container .twofas-card:first-of-type {
+      margin-top: 0; }
+    .twofas-card-container .twofas-card .text-center {
+      text-align: center;
+      margin: 10px 0 !important; }
+    .twofas-card-container .twofas-card .twofas-center {
+      text-align: center; }
+    .twofas-card-container .twofas-card h4 {
+      display: block;
+      padding: 0 10px;
+      text-align: left !important;
+      font-size: 1.3em; }
+    .twofas-card-container .twofas-card .enter-token-container {
+      text-align: center; }
+      .twofas-card-container .twofas-card .enter-token-container .enter-token {
+        display: inline-block;
+        line-height: 29px; }
+        @media all and (max-width: 640px) {
+          .twofas-card-container .twofas-card .enter-token-container .enter-token > input,
+          .twofas-card-container .twofas-card .enter-token-container .enter-token > label {
+            margin-right: 0;
+            margin-bottom: 10px; }
+          .twofas-card-container .twofas-card .enter-token-container .enter-token > input[type="text"] {
+            width: 100%; } }
+        .twofas-card-container .twofas-card .enter-token-container .enter-token > input,
+        .twofas-card-container .twofas-card .enter-token-container .enter-token > label {
+          margin-right: 10px; }
+        .twofas-card-container .twofas-card .enter-token-container .enter-token > input[type="text"] {
+          width: 100px;
+          text-align: center; }
+        .twofas-card-container .twofas-card .enter-token-container .enter-token > label {
+          display: inline-block;
+          vertical-align: middle; }
+        .twofas-card-container .twofas-card .enter-token-container .enter-token .button {
+          padding: 0 20px;
+          height: 28px; }
+    .twofas-card-container .twofas-card input.twofas-link {
+      background: none !important;
+      border: none;
+      padding: 0;
+      margin-bottom: 0;
+      margin-right: 40px;
+      font: inherit;
+      border-bottom: 1px solid #444;
+      cursor: pointer; }
+    .twofas-card-container .twofas-card input.twofas-link-float-right {
+      position: relative; }
+    .twofas-card-container .twofas-card input.twofas-phone[type="text"] {
+      width: 200px; }
+    .twofas-card-container .twofas-card input.twofas-token[type=text] {
+      width: 100px; }
+    .twofas-card-container .twofas-card .twofas-phone-form-row {
+      width: 100%;
+      text-align: center; }
+      .twofas-card-container .twofas-card .twofas-phone-form-row > input,
+      .twofas-card-container .twofas-card .twofas-phone-form-row > label {
+        margin-right: 10px; }
+      .twofas-card-container .twofas-card .twofas-phone-form-row > label {
+        display: inline-block;
+        vertical-align: middle; }
+      .twofas-card-container .twofas-card .twofas-phone-form-row input .twofas-phone-submit[type=submit] {
+        position: relative;
+        top: -5px;
+        margin: 3px 0 0 5px; }
+    .twofas-card-container .twofas-card .twofas-button-form {
+      display: inline-block; }
+
+.twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels {
+  margin-bottom: 45px; }
+  .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels:last-of-type {
+    margin-bottom: 0; }
+  .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info {
+    width: 300px;
+    border: 1px solid #d0d0d0;
+    border-radius: 2px;
+    background-color: whitesmoke;
+    display: inline-block;
+    alignment: center;
+    text-align: center;
+    margin: 0 10px 10px; }
+    @media all and (max-width: 660px) {
+      .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info {
+        width: 200px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 10px; } }
+    .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-header {
+      position: relative;
+      text-align: center;
+      font-size: 1.5em;
+      margin: 5px;
+      padding-top: 5px;
+      font-weight: bold; }
+    .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-description {
+      padding-top: 10px;
+      margin: 5px;
+      min-height: 60px;
+      max-height: 60px; }
+      @media all and (max-width: 660px) {
+        .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-description {
+          height: 100px;
+          padding: 10px;
+          min-height: 66px; } }
+      @media all and (max-width: 400px) {
+        .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-description {
+          min-height: 100px; } }
+    .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-statistics-wrapper {
+      margin: 20px 0 0 0;
+      width: 100%;
+      border-top: 1px solid #d0d0d0; }
+      .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-statistics-wrapper .twofas-admin-channel-statistic {
+        display: inline-block;
+        width: 30%; }
+        .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-statistics-wrapper .twofas-admin-channel-statistic .twofas-admin-channel-statistic-header {
+          margin: 0;
+          font-size: 0.8em; }
+        .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-statistics-wrapper .twofas-admin-channel-statistic .twofas-admin-channel-statistic-content {
+          margin: 0;
+          padding-bottom: 5px; }
+      .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-statistics-wrapper .twofas-admin-bordered-channel-statistic {
+        border-left: 1px solid #d0d0d0;
+        border-right: 1px solid #d0d0d0;
+        margin: 0; }
+    .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-footer {
+      padding: 5px 0;
+      width: 100%;
+      border-top: 1px solid #d0d0d0;
+      text-align: right; }
+      .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-footer input[type="submit"].twofas-channel-panel-disabled-button {
+        margin-right: 8px;
+        cursor: default;
+        pointer-events: none;
+        color: #a0a5aa !important; }
+      .twofas-submenu-admin .twofas-card-container .twofas-card .twofas-card-channels .twofas-admin-channel-info .twofas-admin-channel-footer .twofas-channel-panel-button {
+        margin-right: 10px !important; }
+.twofas-submenu-admin .twofas-card-container .twofas-admin-settings {
+  width: 100%;
+  white-space: nowrap; }
+  .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-admin-settings-row {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 0; }
+    .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-admin-settings-row .twofas-admin-settings-label-column {
+      text-align: right;
+      width: 10%;
+      display: inline-block;
+      margin-right: 10px; }
+    .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-admin-settings-row .twofas-admin-settings-content-column {
+      margin-left: 20px;
+      font-weight: bold;
+      display: inline-block; }
+    .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-admin-settings-row .twofas-admin-email {
+      font-weight: bold; }
+    .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-admin-settings-row .twofas-dashboard-popup {
+      color: #0073aa;
+      text-decoration: underline;
+      border-bottom: none !important; }
+  .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-link-float-left {
+    text-align: left; }
+  .twofas-submenu-admin .twofas-card-container .twofas-admin-settings .twofas-link-float-right {
+    text-align: right; }
+  @media all and (max-width: 660px) {
+    .twofas-submenu-admin .twofas-card-container .twofas-admin-settings div .twofas-link-float-right {
+      padding-bottom: 20px; } }
+
+.twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel {
+  width: 300px;
+  border: 1px solid #d0d0d0;
+  border-radius: 2px;
+  background-color: whitesmoke;
+  display: inline-block;
+  alignment: center;
+  text-align: center;
+  margin: 0 10px 10px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-channel-panel-form {
+    position: relative;
+    top: -20px;
+    left: 90px; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-channel-panel-form .twofas-remove-conf-icon {
+      position: relative;
+      left: 35px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-header {
+    text-align: center;
+    font-size: 1.5em;
+    margin: 5px;
+    padding-top: 5px;
+    font-weight: bold; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-description {
+    padding-top: 10px;
+    margin: 5px;
+    min-height: 60px;
+    max-height: 60px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-description {
+    font-size: 0.8em;
+    text-align: center; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-description .twofas-user-channel-panel-phone-ending {
+      font-size: 13px;
+      margin-top: 20px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-button-row {
+    text-align: center;
+    margin: 20px; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-button-row input[type=submit].twofas-user-channel-button {
+      margin-left: 10px;
+      margin-right: 10px;
+      min-width: 70px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-panel-status {
+    display: inline-block;
+    float: left;
+    position: relative;
+    left: -1px;
+    top: -1px;
+    width: 100%;
+    margin-bottom: 10px;
+    min-height: 50px; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-panel-status .twofas-user-channel-status-label {
+      color: white;
+      padding: 5px;
+      border-radius: 1px;
+      border: solid 1px #f0f0f0;
+      width: 70px;
+      text-align: center; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-panel-status .twofas-channel-label-active {
+      background-color: #39b13e; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .twofas-user-channel-panel .twofas-user-channel-panel-status .twofas-channel-label-inactive {
+      background-color: darkgray; }
+.twofas-submenu-channel .twofas-card-container .twofas-card .twofas-button-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  font: inherit;
+  cursor: pointer;
+  position: relative; }
+.twofas-submenu-channel .twofas-card-container .twofas-card .twofas-paragraph {
+  display: inline-block;
+  margin-left: 5px;
+  font-weight: bold;
+  color: #000; }
+.twofas-submenu-channel .twofas-card-container .twofas-card .trusted-machine-mobile {
+  text-align: center;
+  line-height: 1; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .trusted-machine-mobile div {
+    margin-bottom: 10px;
+    line-height: normal; }
+    .twofas-submenu-channel .twofas-card-container .twofas-card .trusted-machine-mobile div:last-of-type {
+      margin-bottom: 0; }
+  .twofas-submenu-channel .twofas-card-container .twofas-card .trusted-machine-mobile p {
+    font-size: 18px;
+    line-height: 26px;
+    margin: 0; }
+.twofas-submenu-channel .twofas-card-container .twofas-trusted-machines {
+  padding: 20px; }
+  .twofas-submenu-channel .twofas-card-container .twofas-trusted-machines th {
+    font-weight: bold; }
+  .twofas-submenu-channel .twofas-card-container .twofas-trusted-machines .manage-column {
+    width: 25%; }
+  .twofas-submenu-channel .twofas-card-container .twofas-trusted-machines .remove-machine-link {
+    margin: 0; }
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 9999;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: black;
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */ }
+
+.modal-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 200px;
+  margin: auto;
+  background-color: #fefefe;
+  padding: 20px 20px 30px;
+  vertical-align: middle;
+  border: 1px solid #888;
+  width: 350px;
+  height: 180px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2); }
+
+.account-modal-container .modal-header {
+  text-align: right; }
+  .account-modal-container .modal-header a {
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #fefefe;
+    outline: none; }
+    .account-modal-container .modal-header a:hover {
+      background-color: #6f6f6f; }
+.account-modal-container .modal-body {
+  text-align: center; }
+  .account-modal-container .modal-body h3 {
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+    margin: 10px 0 0 0; }
+  .account-modal-container .modal-body p {
+    letter-spacing: -0.5px; }
+.account-modal-container .modal-footer {
+  display: table;
+  width: 100%;
+  margin-top: 20px; }
+  .account-modal-container .modal-footer .modal-footer-right {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: right; }
+    .account-modal-container .modal-footer .modal-footer-right .twofas-button-as-link {
+      border: none;
+      background-color: inherit;
+      padding: 5px;
+      text-decoration: underline;
+      margin-right: 10px;
+      cursor: pointer; }
+    .account-modal-container .modal-footer .modal-footer-right .twofas-no-shadow {
+      text-shadow: none !important; }
+    .account-modal-container .modal-footer .modal-footer-right .twofas-button-form {
+      display: inline-block; }
+
+.twofas-container {
+  display: block;
+  padding: 0; }
+  .twofas-container .twofas-card-center {
+    margin: 50px auto 0 auto;
+    padding: 20px 30px;
+    max-width: 350px; }
+    .twofas-container .twofas-card-center .form-input-container {
+      width: 100%;
+      display: block;
+      margin-bottom: 15px; }
+      .twofas-container .twofas-card-center .form-input-container label {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+        line-height: 1.3;
+        font-size: 14px;
+        font-weight: 600;
+        text-shadow: none;
+        text-align: left;
+        vertical-align: middle;
+        color: #23282d; }
+      .twofas-container .twofas-card-center .form-input-container input {
+        width: 100%;
+        display: block; }
+    .twofas-container .twofas-card-center .form-input-container:last-of-type {
+      margin-bottom: 0; }
+    .twofas-container .twofas-card-center .submit {
+      text-align: right;
+      margin: 10px 0 0 0; }
+      .twofas-container .twofas-card-center .submit input[type="submit"] {
+        padding: 0 20px; }
+      .twofas-container .twofas-card-center .submit input[type="submit"]:first-of-type {
+        margin-left: 4px; }
+    .twofas-container .twofas-card-center .form-table td {
+      padding-right: 0; }
+
+.twofas-admin .notice {
+  margin: 5px 0 !important; }
+  #twofas-notification-wrapper .twofas-admin .notice {
+    margin: 0 !important; }
+.twofas-admin h2 .notification-header {
+  display: none !important; }
+.twofas-admin .twofas-admin-header {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  clear: both;
+  margin-bottom: 10px;
+  line-height: 50px; }
+  @media all and (max-width: 640px) {
+    .twofas-admin .twofas-admin-header {
+      text-align: center; }
+      .twofas-admin .twofas-admin-header img {
+        margin-right: 0; } }
+  .twofas-admin .twofas-admin-header img,
+  .twofas-admin .twofas-admin-header h1,
+  .twofas-admin .twofas-admin-header span {
+    display: inline-block;
+    vertical-align: middle; }
+  .twofas-admin .twofas-admin-header span:first-of-type {
+    font-size: 23px;
+    font-weight: 400;
+    margin: 0;
+    padding: 9px 15px 4px 0;
+    line-height: 29px;
+    color: #23282d; }
+  .twofas-admin .twofas-admin-header span:last-of-type {
+    display: block;
+    padding: 0;
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #23282d; }
+  .twofas-admin .twofas-admin-header img {
+    margin-left: 0;
+    margin-right: 10px; }
+  .twofas-admin .twofas-admin-header h1 {
+    color: #4e4e4e; }
+.twofas-admin h2,
+.twofas-admin h4 {
+  display: block;
+  padding: 0 20px; }
+
+.twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card {
+  text-align: center; }
+  .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .reload-qr-code-form {
+    display: inline-block; }
+  .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .twofas-totp-app {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    margin: 10px; }
+    @media all and (max-width: 640px) {
+      .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .twofas-totp-app {
+        display: block;
+        float: none;
+        height: auto;
+        margin: 0 auto 30px auto; } }
+    .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .twofas-totp-app .twofas-app-label {
+      font-weight: bold; }
+    .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .twofas-totp-app .twofas-app-description {
+      width: 100%;
+      border: 1px solid darkgray;
+      height: 40px;
+      border-radius: 5px;
+      margin-top: 5px;
+      padding: 5px; }
+      .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .twofas-totp-app .twofas-app-description .twofas-app-icon {
+        float: left; }
+  .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .totp-qr-code-img {
+    width: 300px;
+    margin: auto;
+    image-rendering: pixelated; }
+  .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .totp_private_field {
+    text-align: center;
+    font-size: 2.6em;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px; }
+    @media all and (max-width: 480px) {
+      .twofas-configure-totp .twofas-card-container .twofas-card .twofas-totp-card .totp_private_field {
+        font-size: 1.5em; } }
+
+.button-danger {
+  -webkit-box-shadow: 0 1px 0 #B71814 !important;
+  box-shadow: 0 1px 0 #B71814 !important;
+  border-color: #B71814 !important;
+  color: #fff !important;
+  background: #d61f1f !important; }
+  .button-danger:hover {
+    background: #d64040 !important; }
+
+.button-success {
+  -webkit-box-shadow: 0 1px 0 #319134 !important;
+  box-shadow: 0 1px 0 #319134 !important;
+  border-color: #319134 !important;
+  color: #fff !important;
+  background: #39b13e !important; }
+  .button-success:hover {
+    background: #3dba41 !important; }
+
+.submit.disabled::before {
+  content: ' ';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background: url("../img/loading.gif") no-repeat; }
+.submit.disabled .button-primary {
+  color: #66c6e4 !important;
+  background: #008ec2 !important;
+  border-color: #007cb2 !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.1) !important;
+  cursor: default;
+  user-select: none;
+  pointer-events: none; }
+
+.twofas-button-danger {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 26px;
+  height: 28px;
+  margin: 0;
+  padding: 0 10px 1px;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: #d61f1f;
+  color: #fff;
+  border: 1px solid #B71814; }
+
+.twofas-button-danger.twofas-danger-disabled {
+  background: #ae3b3b;
+  pointer-events: none; }
+
+*,
+*:focus,
+*:active {
+  outline: none; }
+
+/*# sourceMappingURL=twofas.css.map */

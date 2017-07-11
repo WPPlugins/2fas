@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,eAAgB;EACd,OAAO,EAAE,IAAI;;AAGf,KAAM;EACJ,MAAM,EAAE,mBAAmB;EAC3B,qBAAqB,EAAC,GAAG;EACzB,kBAAkB,EAAE,GAAG;EACvB,aAAa,EAAE,GAAG;EAClB,gBAAgB,EAAE,KAAK",
+"sources": ["../scss/wp-less-than-42.scss"],
+"names": [],
+"file": "wp-less-than-42.css"
+}

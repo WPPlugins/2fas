@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Log in to the 2FAS.com
+{% endblock %}
+
+{% block content %}
+    <div class="twofas-container">
+        <div class="card twofas-card-center card-login">
+            <form action="{{ twofas_action_url('twofas-login') }}" id="twofas-login-form" method="post">
+                {{ twofas_action_nonce('twofas-login') | raw }}
+                <div class="form-input-container">
+                    <label for="twofas-email">Your 2FAS email:</label>
+                    <input name="twofas[twofas-email]" type="text" id="twofas-email" value="{{ email }}">
+                </div>
+
+                <div class="form-input-container">
+                    <label for="twofas-password">Your 2FAS password:</label>
+                    <input name="twofas[twofas-password]" type="password" id="twofas-password" value="" autofocus>
+                </div>
+
+                <div class="submit">
+                    <input type="submit" name="submit" id="submit-button" class="button button-primary" value="Log In"/>
+                </div>
+
+                <hr>
+            </form>
+            <a href="{{ twofas_action_url('twofas-reset-password') }}">Reset password</a><br>
+            <a href="{{ twofas_action_url('twofas-create-account') }}">Create an account</a><br>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function close_button(button) {
+            var jQueryButton = jQuery(button);
+            jQueryButton.parent().hide();
+        }
+
+        function add_error_notification(content) {
+            jQuery(".notification-header").after('<div class="notice notice-error is-dismissible error"><p>' + content + '</p><button onclick="close_button(this)" class="notice-dismiss" type="button"></button></div>');
+        }
+
+        jQuery(document).ready(function () {
+            jQuery('#submit-button').click(function () {
+                var email               = jQuery('#twofas-email').val();
+                var password            = jQuery('#twofas-password').val();
+                var missing_credentials = false;
+
+                if (!password.length) {
+                    add_error_notification('Please enter your 2FAS password');
+                    missing_credentials = true;
+                }
+
+                if (!email.length) {
+                    add_error_notification('Please enter your 2FAS e-mail');
+                    missing_credentials = true;
+                }
+
+                if (missing_credentials) {
+                    return false;
+                }
+
+                jQuery('.submit').addClass('disabled');
+                jQuery('#submit-button').find('input[type="submit"]').val('Loading...');
+            });
+        });
+    </script>
+
+{% endblock %}

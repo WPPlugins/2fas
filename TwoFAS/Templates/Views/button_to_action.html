@@ -1,0 +1,9 @@
+<form class="twofas-button-form" action="{{ twofas_action_url(action) }}" method="post">
+    {{ twofas_action_nonce(action) | raw }}
+
+    {% if twofas_hidden_input_name is defined %}
+        <input type="hidden" name="{{ twofas_hidden_input_name }}" value="{{ twofas_hidden_input_value }}">
+    {% endif %}
+
+    <input type="submit" id="{{ id }}" class="{{ class }}" name = "{{ input_name }}" value="{{ name }}" data-modal="{{ data_modal }}">
+</form>

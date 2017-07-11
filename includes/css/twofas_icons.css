@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/icomoon.eot?oo3zwl');
+  src:  url('../fonts/icomoon.eot?oo3zwl#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?oo3zwl') format('truetype'),
+    url('../fonts/icomoon.woff?oo3zwl') format('woff'),
+    url('../fonts/icomoon.svg?oo3zwl#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"],
+.toplevel_page_twofas-submenu-channel#toplevel_page_twofas-submenu-channel > a > .wp-menu-image:before,
+.toplevel_page_twofas-submenu-channel#toplevel_page_twofas-submenu-channel > a > .wp-menu-image {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Enable Ligatures ================ */
+  letter-spacing: 0;
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  font-feature-settings: "liga";
+  -webkit-font-variant-ligatures: discretionary-ligatures;
+  font-variant-ligatures: discretionary-ligatures;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.toplevel_page_twofas-submenu-channel#toplevel_page_twofas-submenu-channel > a > .wp-menu-image:before {
+  content: "\e900";
+}
+
+.icon-phone:before {
+  content: "\e942";
+}
+
+.icon-mobile:before {
+  content: "\e958";
+}
+
+.icon-spinner8:before {
+  content: "\e981";
+}
+
+.icon-bin:before {
+  content: "\e9ac";
+}
+
+.icon-phone {
+  position: absolute;
+  left: 0;
+}
+
+.icon-mobile {
+  position: absolute;
+  left: 0;
+}
+
+.icon-spinner8 {
+  position: absolute;
+  left: 0;
+}
+
+.icon-bin {
+  font-size: 15px;
+}

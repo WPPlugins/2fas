@@ -1,0 +1,70 @@
+<div class="twofas-admin-channel-info">
+    <div class="twofas-admin-channel-header">
+        <span class="{{ icon_class }}"></span><span>{{ name }}</span>
+    </div>
+    <div class="twofas-admin-channel-description">
+        {{ description }}
+    </div>
+    <div class="twofas-admin-channel-statistics-wrapper hidden-phone">
+        <div class="twofas-admin-channel-statistic">
+            <div class="twofas-admin-channel-statistic-header">
+                Configured on:
+            </div>
+            <div class="twofas-admin-channel-statistic-content">
+                {{ configured_on }}
+            </div>
+        </div>
+        <div class="twofas-admin-bordered-channel-statistic twofas-admin-channel-statistic">
+            <div class="twofas-admin-channel-statistic-header">
+                Active on:
+            </div>
+            <div class="twofas-admin-channel-statistic-content">
+                {{ active_on }}
+            </div>
+        </div>
+        <div class="twofas-admin-channel-statistic">
+            <div class="twofas-admin-channel-statistic-header">
+                Inactive on:
+            </div>
+            <div class="twofas-admin-channel-statistic-content">
+                {{ inactive_on }}
+            </div>
+        </div>
+    </div>
+    <div class="twofas-admin-channel-statistics-wrapper visible-phone">
+        Configured on: {{ configured_on }}<br>
+        Active on: {{ active_on }}<br>
+        Inactive on: {{ inactive_on }}
+    </div>
+    <div class="twofas-admin-channel-footer">
+        {% if method_status == 'DISABLED' %}
+            {% include 'button_to_action.html' with {
+                'name'       : 'Allow',
+                'class'      : 'button button-success twofas-channel-panel-button',
+                'action'     : enable_action,
+                'input_name' : channel_submit,
+                'data_modal' : modal_name
+            } %}
+        {% elseif method_status == 'ENABLED' and twofas_confirmation_value == true %}
+            {% include 'button_to_action.html' with {
+                'name'                      : 'Disallow',
+                'class'                     : 'button button-danger twofas-channel-panel-button twofas-modal-opener',
+                'action'                    : admin_action,
+                'input_name'                : channel_submit,
+                'twofas_hidden_input_name'  : twofas_confirmation_name,
+                'twofas_hidden_input_value' : twofas_confirmation_value,
+                'data_modal' : modal_name
+            } %}
+        {% elseif method_status == 'ENABLED' %}
+            {% include 'button_to_action.html' with {
+                'name'       : 'Disallow',
+                'class'      : 'button button-danger twofas-channel-panel-button twofas-modal-opener',
+                'action'     : disable_action,
+                'input_name' : channel_submit,
+                'data_modal' : modal_name
+            } %}
+        {% else %}
+            <input type="submit" class="button button-inform disabled twofas-channel-panel-disabled-button" name="{{ channel_submit}}" value="Disabled">
+        {% endif %}
+    </div>
+</div>

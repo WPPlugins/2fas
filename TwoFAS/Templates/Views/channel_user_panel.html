@@ -1,0 +1,69 @@
+<div class="twofas-user-channel-panel">
+    <div class="twofas-user-channel-panel-status">
+        {% if auth_method == name %}
+            <div id="{{id_prefix}}-status" class="twofas-user-channel-status-label twofas-channel-label-active">Active</div>
+        {% else %}
+            <div id="{{id_prefix}}-status" class="twofas-user-channel-status-label twofas-channel-label-inactive">Inactive</div>
+        {% endif %}
+
+        {% if status == 'CONFIGURED_ENABLED' or status == 'CONFIGURED_DISABLED' %}
+            <form class="twofas-channel-panel-form" action="" method="post">
+                {{ twofas_action_nonce(remove_configuration_action) | raw }}
+                <input type="hidden" name="twofas[method-name]" value="{{ name }}">
+                <input type="hidden" name="twofas[remove-action]" value="{{ remove_configuration_action }}">
+                <button type="submit" id="{{id_prefix}}-configuration-remove" class="twofas-button-link twofas-remove-conf-icon twofas-modal-opener" data-modal="{{ modal_name }}">
+                    <span class="icon-bin"></span>
+                </button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="twofas-user-channel-header">
+        {{ display_name }}
+    </div>
+    <div class="twofas-user-channel-description">
+        {{ description }}
+
+        {% if (name == 'SMS' or name == 'CALL') and (status == 'CONFIGURED_ENABLED' or status == 'CONFIGURED_DISABLED') %}
+            <div class="twofas-user-channel-panel-phone-ending"><p><strong>Configured on ...{{ phone_number_ending(phone_number) }}</strong></p></div>
+        {% endif %}
+    </div>
+        {% set configure_id = id_prefix~'-configure' %}
+        {% set enable_id = id_prefix~'-enable' %}
+        {% set disable_id = id_prefix~'-disable' %}
+    <div class="twofas-user-channel-button-row">
+        {% if status == 'CONFIGURED_ENABLED' %}
+            {% include 'button_to_action.html' with {
+                'action': disable_action,
+                'class' : 'twofas-user-channel-button button button-danger',
+                'name' : 'Disable',
+                'id': disable_id
+            } %}
+            {% include 'button_to_action.html' with {
+                'action': configure_action,
+                'class' : 'twofas-user-channel-button button button-primary',
+                'name' : 'Reconfigure',
+                'id': configure_id
+            } %}
+        {% elseif status == 'CONFIGURED_DISABLED' %}
+            {% include 'button_to_action.html' with {
+                'action': enable_action,
+                'class' : 'twofas-user-channel-button button button-success',
+                'name' : 'Enable',
+                'id': enable_id
+            } %}
+            {% include 'button_to_action.html' with {
+                'action': configure_action,
+                'class' : 'twofas-user-channel-button button button-primary',
+                'name' : 'Reconfigure',
+                'id': configure_id
+            } %}
+        {% else %}
+            {% include 'button_to_action.html' with {
+            'action': configure_action,
+            'class' : 'twofas-user-channel-button button button-info',
+            'name' : 'Configure',
+            'id': configure_id
+        } %}
+        {% endif %}
+    </div>
+</div>

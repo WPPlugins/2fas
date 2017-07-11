@@ -1,0 +1,40 @@
+<noscript>
+    <style>
+        .twofas-admin {
+            display: none;
+        }
+    </style>
+    <br><br><br><br>
+    <div class="error notice"> <h2>We have noticed, that JavaScript is disabled by your browser. Please turn on JavaScript in order to use the 2FAS - Two Factor Authentication Service plugin.</h2> </div>
+</noscript>
+
+
+<div class="wrap twofas-admin">
+    <div class="twofas-admin-header">
+        <img src="{{ twofas_plugin_path ~ '/includes/img/2fas.png'}}" alt="2FAS Logo"/>
+        <span>2FAS - Two Factor Authentication Service</span>
+        <span>{% block title %}{% endblock %}</span>
+    </div>
+
+    {{ init_thickbox() }}
+
+    <h2 class="notification-header"></h2>
+
+    {{ display_not_configured_notification() | raw }}
+
+    {{ twofas_notifications | raw}}
+
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script>
+    jQuery(document).ready(function () {
+        (function(){
+            var url = window.location.href;
+            url = decodeURI(url);
+            var newUrl = url.replace(/&?twofas-notifications\[\d*]=[se]-[a-z-\d]+&?/g,'');
+            window.history.pushState("","", newUrl);
+        })();
+    });
+</script>
